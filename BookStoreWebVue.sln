@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStoreWebVue.Server", "BookStoreWebVue.Server\BookStoreWebVue.Server.csproj", "{61A293EA-4D0C-495B-A227-2B06A4C967E9}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bookstorewebvue.client", "bookstorewebvue.client\bookstorewebvue.client.esproj", "{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61A293EA-4D0C-495B-A227-2B06A4C967E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A293EA-4D0C-495B-A227-2B06A4C967E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A293EA-4D0C-495B-A227-2B06A4C967E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A293EA-4D0C-495B-A227-2B06A4C967E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC3CF06-3AA9-4E49-A6CF-25EAE76E9666}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0FC519E-0423-4B21-B20A-29EF50FD2AA5}
+	EndGlobalSection
+EndGlobal

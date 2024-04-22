@@ -1,0 +1,6 @@
+@BookStoreWebVue.Server_HostAddress = http://localhost:5023
+
+GET {{BookStoreWebVue.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
