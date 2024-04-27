@@ -1,8 +1,9 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
+using BookStoreWebVue.Server.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using TestOperations;
 
-namespace BookStoreWeb.Controllers
+
+namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -24,7 +25,7 @@ namespace BookStoreWeb.Controllers
 
         // GET: api/author/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id, int addId)
+        public IActionResult Get(Guid id, Guid addId)
         {
             var customerAddress = _customerOrderDataAccess.GetCustomerOrderById(id);
 
@@ -50,7 +51,7 @@ namespace BookStoreWeb.Controllers
         }
 
         [HttpPut("{id}/update")]
-        public IActionResult Put(int id, [FromBody] CustomerOrder customerOrder)
+        public IActionResult Put(Guid id, [FromBody] CustomerOrder customerOrder)
         {
             if (customerOrder == null || customerOrder.customerId != id)
             {
@@ -68,7 +69,7 @@ namespace BookStoreWeb.Controllers
         }
 
         [HttpDelete("{id}/delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var customer = _customerOrderDataAccess.GetCustomerOrderById(id);
             if (customer == null)

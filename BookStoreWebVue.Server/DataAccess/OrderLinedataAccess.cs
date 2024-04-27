@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class OrderLineDataAccess
     {
@@ -49,7 +49,7 @@ namespace TestOperations
             }
         }
 
-        public OrderLine GetOrderLineById(int lineId)
+        public OrderLine GetOrderLineById(Guid lineId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -74,7 +74,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteOrderLine(int lineId)
+        public void DeleteOrderLine(Guid lineId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

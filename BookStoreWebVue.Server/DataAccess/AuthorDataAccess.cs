@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BookStore;
+using BookStoreWebVue.Server.BookStore;
 using System.Threading.Tasks;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class AuthorDataAccess
     {
@@ -50,7 +50,7 @@ namespace TestOperations
             }
         }
 
-        public Author GetAuthorById(int authorId)
+        public Author GetAuthorById(Guid authorId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -66,7 +66,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteAuthor(int authorId)
+        public void DeleteAuthor(Guid authorId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

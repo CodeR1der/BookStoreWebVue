@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class SupplyLineDataAccess
     {
@@ -56,7 +56,7 @@ namespace TestOperations
             }
         }
 
-        public SupplyLine GetSupplyLineById(int supplyLineId)
+        public SupplyLine GetSupplyLineById(Guid supplyLineId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -81,7 +81,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteSupplyLine(int supplyLineId)
+        public void DeleteSupplyLine(Guid supplyLineId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

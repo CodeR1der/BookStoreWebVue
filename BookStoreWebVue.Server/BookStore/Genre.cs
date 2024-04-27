@@ -1,12 +1,12 @@
 ﻿using LinqToDB.Mapping;
 
-namespace BookStore
+namespace BookStoreWebVue.Server.BookStore
 {
     [Table(Name = "Genre")]
 
     public class Genre
     {
-        [PrimaryKey, Identity] public int genreId { get; set; }
+        [PrimaryKey, Identity] public Guid genreId { get; set; }
         [Column] public string genreName { get; set; }
     }
 }

@@ -54,17 +54,17 @@
             return {
                 newBook: {
                     title: '',
-                    authorId: 0,
-                    author: { authorId: 0, authorName: '' },
+                    authorId: '',
+                    author: { authorId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', authorName: '' },
                     isbn13: '',
-                    languageId: 0,
-                    language: { language: 0, languageCode: '', languageName: '' },
+                    languageId: '',
+                    language: { language: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', languageCode: '', languageName: '' },
                     numPages: 0,
                     publicationDate: 0,
-                    publisherId: 0,
-                    publisher: { publisherId: 0, publisherName: '' },
-                    genreId: 0,
-                    genre: { genreId: 0, genreName: '' },
+                    publisherId: '',
+                    publisher: { publisherId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', publisherName: '' },
+                    genreId: '',
+                    genre: { genreId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', genreName: '' },
                     price: 0
                 }
             };

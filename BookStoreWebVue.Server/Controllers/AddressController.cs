@@ -1,8 +1,8 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
+using BookStoreWebVue.Server.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using TestOperations;
 
-namespace BookStoreWeb.Controllers
+namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -25,7 +25,7 @@ namespace BookStoreWeb.Controllers
 
         // GET: api/address/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             var address = _addressDataAccess.GetAddressById(id);
 
@@ -51,7 +51,7 @@ namespace BookStoreWeb.Controllers
         }
 
         [HttpPut("{id}/update")]
-        public IActionResult Put(int id, [FromBody] Address address)
+        public IActionResult Put(Guid id, [FromBody] Address address)
         {
             if (address == null || address.addressId != id)
             {
@@ -70,7 +70,7 @@ namespace BookStoreWeb.Controllers
 
         // DELETE: api/books/5
         [HttpDelete("{id}/delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var book = _addressDataAccess.GetAddressById(id);
             if (book == null)

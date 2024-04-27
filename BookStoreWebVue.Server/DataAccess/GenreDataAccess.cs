@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookStore;
+using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class GenreDataAccess
     {
@@ -52,7 +52,7 @@ namespace TestOperations
             }
         }
 
-        public Genre GetGenreById(int genreId)
+        public Genre GetGenreById(Guid genreId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -68,7 +68,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteGenre(int genreId)
+        public void DeleteGenre(Guid genreId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

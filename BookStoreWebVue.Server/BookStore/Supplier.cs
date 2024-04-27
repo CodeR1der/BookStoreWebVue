@@ -1,13 +1,13 @@
 ﻿using LinqToDB.Mapping;
 using System.Xml.Linq;
 
-namespace BookStore
+namespace BookStoreWebVue.Server.BookStore
 {
     [Table(Name = "Supplier")]
 
     public class Supplier
     {
-        [PrimaryKey, Identity] public int supplierId { get; set; }
+        [PrimaryKey, Identity] public Guid supplierId { get; set; }
         [Column] public string supplierName { get; set; }
     }
 }

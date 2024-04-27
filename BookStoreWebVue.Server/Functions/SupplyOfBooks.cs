@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using Microsoft.Extensions.Configuration;

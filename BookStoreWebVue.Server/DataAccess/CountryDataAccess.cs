@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class CountryDataAccess
     {
@@ -52,7 +52,7 @@ namespace TestOperations
             }
         }
 
-        public Country GetCountryById(int countryId)
+        public Country GetCountryById(Guid countryId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -68,7 +68,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteCountry(int countryId)
+        public void DeleteCountry(Guid countryId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

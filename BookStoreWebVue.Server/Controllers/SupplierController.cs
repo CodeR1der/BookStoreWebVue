@@ -1,9 +1,10 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
+using BookStoreWebVue.Server.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace TestOperations.Controllers
+namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -24,7 +25,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             var supplier = _supplierDataAccess.GetSupplierById(id);
 
@@ -49,7 +50,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpPut("{id}/update")]
-        public IActionResult Put(int id, [FromBody] Supplier supplier)
+        public IActionResult Put(Guid id, [FromBody] Supplier supplier)
         {
             if (supplier == null || supplier.supplierId != id)
             {
@@ -67,7 +68,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpDelete("{id}/delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var supplier = _supplierDataAccess.GetSupplierById(id);
             if (supplier == null)

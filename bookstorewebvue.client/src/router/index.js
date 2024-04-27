@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/HomePage.vue'
 import Books from '../pages/BooksPage.vue'
 import ShoppingCart from '../pages/ShoppingCart.vue'
-import Admin from '../admin/Admin-Panel.vue'
+import Admin from '../pages/admin/Admin-Panel.vue'
 import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import auth from '@/store/auth';

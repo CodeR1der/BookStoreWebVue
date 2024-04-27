@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class CustomerAddressDataAccess
     {
@@ -30,26 +30,7 @@ namespace TestOperations
             }
         }
 
-        public void PrintAllCustomerAddresses()
-        {
-            using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
-            {
-                var allCustomerAddresses = db.GetTable<CustomerAddress>()
-                    .LoadWith(ca => ca.customer)
-                    .LoadWith(ca => ca.address)
-                    .ToList();
-
-                Console.WriteLine("{0,-10} {1,-20} {2,-30} {3,-40}", "Customer ID", "Customer Name", "Street Name", "City");
-                Console.WriteLine(new string('-', 60));
-
-                foreach (var customerAddress in allCustomerAddresses)
-                {
-                    Console.WriteLine("{0,-10} {1,-20} {2,-30} {3,-40}", customerAddress.customer.customerId, customerAddress.customer.firstName + " " + customerAddress.customer.lastName, customerAddress.address.streetName, customerAddress.address.city);
-                }
-            }
-        }
-
-        public CustomerAddress GetCustomerAddressById(int customerId, int addressId)
+        public CustomerAddress GetCustomerAddressById(Guid customerId, Guid addressId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -74,7 +55,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteCustomerAddress(int customerId, int addressId)
+        public void DeleteCustomerAddress(Guid customerId, Guid addressId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

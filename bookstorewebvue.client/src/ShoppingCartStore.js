@@ -1,7 +1,10 @@
 import { reactive } from 'vue';
 
+// Получаем корзину из localStorage, если она там есть
+const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
 const state = reactive({
-    cartItems: []
+    cartItems: savedCartItems
 });
 
 const methods = {
@@ -14,20 +17,28 @@ const methods = {
             book.quantity = 1;
             state.cartItems.push(book);
         }
+
+        // Сохраняем обновленную корзину в localStorage
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     removeFromCart(index) {
         state.cartItems.splice(index, 1);
+        // Сохраняем обновленную корзину в localStorage
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     increaseQuantity(item) {
         item.quantity++;
+        // Сохраняем обновленную корзину в localStorage
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     decreaseQuantity(item) {
         if (item.quantity === 1) {
             var index = state.cartItems.lastIndexOf(item);
             this.removeFromCart(index);
-        }
-        else {
+        } else {
             item.quantity--;
+            // Сохраняем обновленную корзину в localStorage
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         }
     },
     getTotalCartItems() {

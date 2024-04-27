@@ -1,9 +1,10 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
+using BookStoreWebVue.Server.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace TestOperations.Controllers
+namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -24,7 +25,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             var shippingMethod = _shippingMethodDataAccess.GetShippingMethodById(id);
 
@@ -49,7 +50,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpPut("{id}/update")]
-        public IActionResult Put(int id, [FromBody] ShippingMethod shippingMethod)
+        public IActionResult Put(Guid id, [FromBody] ShippingMethod shippingMethod)
         {
             if (shippingMethod == null || shippingMethod.methodId != id)
             {
@@ -67,7 +68,7 @@ namespace TestOperations.Controllers
         }
 
         [HttpDelete("{id}/delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var publisher = _shippingMethodDataAccess.GetShippingMethodById(id);
             if (publisher == null)

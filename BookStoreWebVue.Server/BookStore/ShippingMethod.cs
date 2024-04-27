@@ -1,13 +1,13 @@
 ﻿using LinqToDB.Mapping;
 using System.Xml.Linq;
 
-namespace BookStore
+namespace BookStoreWebVue.Server.BookStore
 {
     [Table(Name = "ShippingMethod")]
 
     public class ShippingMethod
     {
-        [PrimaryKey, Identity] public int methodId { get; set; }
+        [PrimaryKey, Identity] public Guid methodId { get; set; }
         [Column] public string methodName { get; set; }
         [Column] public double cost { get; set; }
     }

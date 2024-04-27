@@ -1,8 +1,8 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using Microsoft.Extensions.Configuration;
-using TestOperations;
+using BookStoreWebVue.Server.DataAccess;
 
 namespace BookStoreWebVue.Server.Functions
 {

@@ -67,6 +67,14 @@ export default defineConfig({
             '^/customer': {
                 target,
                 secure: false
+            },
+            '^/user': {
+                target,
+                secure: false
+            },
+            '^/authorization': {
+                target,
+                secure: false
             }
         },
         port: 5173,

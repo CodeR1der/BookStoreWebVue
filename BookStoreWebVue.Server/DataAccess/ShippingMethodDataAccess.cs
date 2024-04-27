@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class ShippingMethodDataAccess
     {
@@ -52,7 +52,7 @@ namespace TestOperations
             }
         }
 
-        public ShippingMethod GetShippingMethodById(int methodId)
+        public ShippingMethod GetShippingMethodById(Guid methodId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -67,7 +67,7 @@ namespace TestOperations
                 db.Update(shippingMethod);
             }
         }
-        public void DeleteShippingMethod(int shippingMethodId)
+        public void DeleteShippingMethod(Guid shippingMethodId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

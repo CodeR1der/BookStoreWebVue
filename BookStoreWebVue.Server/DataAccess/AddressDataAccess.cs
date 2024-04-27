@@ -1,13 +1,8 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class AddressDataAccess
     {
@@ -46,7 +41,7 @@ namespace TestOperations
             }
         }
 
-        public Address GetAddressById(int addressId)
+        public Address GetAddressById(Guid addressId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -69,7 +64,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteAddress(int addressId)
+        public void DeleteAddress(Guid addressId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

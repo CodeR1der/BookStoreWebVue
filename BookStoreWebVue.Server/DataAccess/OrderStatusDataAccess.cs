@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class OrderStatusDataAccess
     {
@@ -52,7 +52,7 @@ namespace TestOperations
             }
         }
 
-        public OrderStatus GetOrderStatusById(int statusId)
+        public OrderStatus GetOrderStatusById(Guid statusId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -68,7 +68,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteOrderStatus(int statusId)
+        public void DeleteOrderStatus(Guid statusId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

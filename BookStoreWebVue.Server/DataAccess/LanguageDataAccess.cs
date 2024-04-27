@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class LanguageDataAccess
     {
@@ -51,7 +51,7 @@ namespace TestOperations
             }
         }
 
-        public BookLanguage GetLanguageIdById(int languageId)
+        public BookLanguage GetLanguageIdById(Guid languageId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -67,7 +67,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteLanguage(int languageId)
+        public void DeleteLanguage(Guid languageId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

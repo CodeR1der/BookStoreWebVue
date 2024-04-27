@@ -1,12 +1,12 @@
 ﻿using LinqToDB.Mapping;
 using System.Xml.Linq;
 
-namespace BookStore
+namespace BookStoreWebVue.Server.BookStore
 {
     [Table(Name = "Country")]
     public class Country
     {
-        [PrimaryKey, Identity] public int countryId { get; set; }
+        [PrimaryKey, Identity] public Guid countryId { get; set; }
         [Column] public string countryName { get; set; }
         public override string ToString()
         {

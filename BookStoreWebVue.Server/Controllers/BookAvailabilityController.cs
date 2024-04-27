@@ -1,8 +1,9 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
+using BookStoreWebVue.Server.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using TestOperations;
 
-namespace BookStoreWeb.Controllers
+
+namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -24,7 +25,7 @@ namespace BookStoreWeb.Controllers
 
         // GET: api/author/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             var bookAvailability = _bookAvailabilityDataAccess.GetBookAvailabilityById(id);
 
@@ -51,7 +52,7 @@ namespace BookStoreWeb.Controllers
 
         // PUT: api/author/5
         [HttpPut("{id}/update")]
-        public IActionResult Put(int id, [FromBody] BookAvailability bookAvailability)
+        public IActionResult Put(Guid id, [FromBody] BookAvailability bookAvailability)
         {
             if (bookAvailability == null || bookAvailability.availabilityId != id)
             {
@@ -70,7 +71,7 @@ namespace BookStoreWeb.Controllers
 
         // DELETE: api/author/5
         [HttpDelete("{id}/delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             var bookAvailability = _bookAvailabilityDataAccess.GetBookAvailabilityById(id);
             if (bookAvailability == null)

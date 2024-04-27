@@ -13,7 +13,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Пароль</label>
-                    <input type="password" id="password" class="form-control" v-model="password" />
+                    <input type="password" id="passwordHash" class="form-control" v-model="passwordHash" />
                 </div>
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
@@ -30,20 +30,19 @@
         data() {
             return {
                 email: '',
-                password: '',
+                passwordHash: '',
                 nickname: '',
             };
         },
         methods: {
             register() {
-                if (this.password !== this.confirmPassword) {
+                if (this.passwordHash !== this.confirmPassword) {
                     console.error('Passwords do not match');
-                    // Handle error
                     return;
                 }
                 const user = {
                     email: this.email,
-                    password: this.password,
+                    passwordHash: this.passwordHash,
                     isAdmin: false,
                     nickname: this.nickname,
                 };

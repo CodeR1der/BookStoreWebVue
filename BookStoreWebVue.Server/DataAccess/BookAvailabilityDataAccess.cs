@@ -1,4 +1,4 @@
-﻿using BookStore;
+﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class BookAvailabilityDataAccess
     {
@@ -50,7 +50,7 @@ namespace TestOperations
                 }
             }
         }
-        public BookAvailability GetBookAvailabilityById(int bookAvailabilityId)
+        public BookAvailability GetBookAvailabilityById(Guid bookAvailabilityId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -74,7 +74,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteBookAvailability(int bookAvailabilityId)
+        public void DeleteBookAvailability(Guid bookAvailabilityId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {

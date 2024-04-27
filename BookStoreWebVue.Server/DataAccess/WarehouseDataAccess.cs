@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookStore;
+using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
 
 
-namespace TestOperations
+namespace BookStoreWebVue.Server.DataAccess
 {
     public class WarehouseDataAccess
     {
@@ -48,7 +48,7 @@ namespace TestOperations
             }
         }
 
-        public Warehouse GetWarehouseById(int warehouseId)
+        public Warehouse GetWarehouseById(Guid warehouseId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
@@ -73,7 +73,7 @@ namespace TestOperations
             }
         }
 
-        public void DeleteWarehouse(int warehouseId)
+        public void DeleteWarehouse(Guid warehouseId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
