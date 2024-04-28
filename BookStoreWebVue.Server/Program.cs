@@ -5,7 +5,8 @@ var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 builder.Services.AddScoped<BookDataAccess>(_ => new BookDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<AuthorDataAccess>(_ => new AuthorDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<LanguageDataAccess>(_ => new LanguageDataAccess(configuration.GetConnectionString("MyConnectionString")));
@@ -13,7 +14,6 @@ builder.Services.AddScoped<GenreDataAccess>(_ => new GenreDataAccess(configurati
 builder.Services.AddScoped<AddressDataAccess>(_ => new AddressDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<BookAvailabilityDataAccess>(_ => new BookAvailabilityDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<CountryDataAccess>(_ => new CountryDataAccess(configuration.GetConnectionString("MyConnectionString")));
-builder.Services.AddScoped<CustomerAddressDataAccess>(_ => new CustomerAddressDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<CustomerOrderDataAccess>(_ => new CustomerOrderDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<OrderHistoryDataAccess>(_ => new OrderHistoryDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<OrderLineDataAccess>(_ => new OrderLineDataAccess(configuration.GetConnectionString("MyConnectionString")));

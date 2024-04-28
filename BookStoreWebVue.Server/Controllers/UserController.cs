@@ -1,6 +1,9 @@
 ﻿using BookStoreWebVue.Server.BookStore;
 using BookStoreWebVue.Server.DataAccess;
+using BookStoreWebVue.Server.Functions;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace BookStoreWebVue.Server.Controllers
 {
@@ -60,9 +63,34 @@ namespace BookStoreWebVue.Server.Controllers
             {
                 return NotFound();
             }
-
+            
             _userDataAccess.UpdateUser(user);
             return NoContent();
+        }
+        [HttpPatch("{id}/patch")]
+        public IActionResult Patch(Guid id, [FromBody] JsonPatchDocument<User> patchUser)
+        {
+            if (patchUser == null)
+            {
+                return BadRequest();
+            }
+
+            var existingUser = _userDataAccess.GetUserById(id);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            patchUser.ApplyTo(existingUser, ModelState);
+
+            if (!TryValidateModel(existingUser))
+            {
+                return BadRequest(ModelState);
+            }
+
+            _userDataAccess.UpdateUser(existingUser);
+            var token = AuthorizationFunc.GenerateJwtToken(existingUser);
+            return Ok(new { Token = token });
         }
 
         [HttpDelete("{id}/delete")]

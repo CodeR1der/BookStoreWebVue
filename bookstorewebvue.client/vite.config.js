@@ -62,8 +62,7 @@ export default defineConfig({
             '^/language': {
                 target,
                 secure: false
-            }
-            ,
+            },
             '^/customer': {
                 target,
                 secure: false
@@ -75,6 +74,10 @@ export default defineConfig({
             '^/authorization': {
                 target,
                 secure: false
+            },
+            '^/address': {
+                target,
+                secure: false
             }
         },
         port: 5173,
@@ -83,4 +86,4 @@ export default defineConfig({
             cert: fs.readFileSync(certFilePath),
         }
     }
-})
+});

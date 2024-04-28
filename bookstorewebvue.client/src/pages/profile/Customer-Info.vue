@@ -6,15 +6,15 @@
             <form>
                 <div class="mb-3">
                     <label for="firstname" class="form-label">Имя:</label>
-                    <input type="text" id="firstname" v-model="editedCustomer.firstName" class="form-control">
+                    <input type="text" id="firstname" v-model="currentUser.unique_name" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="lastname" class="form-label">Фамилия:</label>
-                    <input type="text" id="lastname" v-model="editedCustomer.lastName" class="form-control">
+                    <input type="text" id="lastname" v-model="currentUser.family_name" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="text" id="email" v-model="editedCustomer.email" class="form-control" disabled>
+                    <input type="text" id="email" v-model="currentUser.email" class="form-control" disabled>
                 </div>
                 <button @click.prevent="updateCustomer" class="btn btn-primary">Сохранить</button>
             </form>
@@ -40,45 +40,23 @@
                 currentUser
             };
         },
-        data() {
-            return {
-                editedCustomer: {}
-            };
-        },
         methods: {
-            async getCustomers() {
-                try {
-                    const response = await axios.get(`customers`);
-                    return response.data;
-                } catch (error) {
-                    console.error(error);
-                    return [];
-                }
-            },
             async updateCustomer() {
+                const patchOperations = [
+                    { op: 'replace', path: '/firstName', value: this.currentUser.unique_name },
+                    { op: 'replace', path: '/lastName', value: this.currentUser.family_name }
+                ]; 
                 try {
-                    await axios.put(`customers/${this.editedCustomer.customerId}/update`, this.editedCustomer);
-                } catch (error) {
-                    console.error(error);
-                }
-            },
-            async fetchCustomerData() {
-                try {
-                    const email = this.currentUser.email;
-                    const response = await axios.get(`customers`);
-                    const customers = response.data;
-                    const customer = customers.find(c => c.email === email);
-                    if (customer) {
-                        this.editedCustomer = customer;
-                    }
+                    const response = await axios.patch(`users/${this.currentUser.userId}/patch`, patchOperations);
+                    const newToken = response.data.token;
+                    localStorage.removeItem('token'); 
+                    localStorage.setItem('token', newToken);
                 } catch (error) {
                     console.error(error);
                 }
             }
         },
-        mounted() {
-            this.fetchCustomerData();
-        }
+
     };
 </script>
 

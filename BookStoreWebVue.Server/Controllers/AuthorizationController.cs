@@ -6,6 +6,7 @@ using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using BookStoreWebVue.Server.Functions;
 
 
 namespace BookStoreWebVue.Server.Controllers
@@ -35,7 +36,7 @@ namespace BookStoreWebVue.Server.Controllers
                 return Unauthorized(new { message = "Invalid email or password" });
             }
 
-            string token = GenerateJwtToken(user, configuration.GetValue<string>("KeyStrings:Secret"), 60);
+            string token = AuthorizationFunc.GenerateJwtToken(user);
 
             return Ok(new { user, Token = token });
         }
@@ -62,13 +63,12 @@ namespace BookStoreWebVue.Server.Controllers
                 passwordHash = passwordHash,
                 isAdmin = true,
                 nickname = request.nickname,
-
             };
 
             _userDataAccess.AddUser(newUser);
 
             // Generate JWT token
-            string token = GenerateJwtToken(newUser, configuration.GetValue<string>("KeyStrings:Secret"), 60);
+            string token = AuthorizationFunc.GenerateJwtToken(newUser);
 
             // Return user data along with token
             return Ok(new { newUser, Token = token });
@@ -100,29 +100,6 @@ namespace BookStoreWebVue.Server.Controllers
         {
             string inputPasswordHash = HashPassword(inputPassword);
             return inputPasswordHash == storedPasswordHash;
-        }
-
-        private string GenerateJwtToken(User user, string secretKey, int expiryMinutes)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Email, user.email), 
-                    new Claim("userId", user.userId.ToString()), 
-                    new Claim(ClaimTypes.Role, user.isAdmin ? "admin" : "user"), 
-                    new Claim("nickname", user.nickname), 
-                    
-
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(expiryMinutes),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
         }
     }
 

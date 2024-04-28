@@ -8,9 +8,5 @@ namespace BookStoreWebVue.Server.BookStore
     {
         [PrimaryKey, Identity] public Guid countryId { get; set; }
         [Column] public string countryName { get; set; }
-        public override string ToString()
-        {
-            return countryName;
-        }
     }
 }

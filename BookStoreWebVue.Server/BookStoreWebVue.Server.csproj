@@ -15,6 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="linq2db" Version="5.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>

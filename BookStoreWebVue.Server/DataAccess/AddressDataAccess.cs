@@ -45,7 +45,9 @@ namespace BookStoreWebVue.Server.DataAccess
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
-                return db.GetTable<Address>().FirstOrDefault(a => a.addressId == addressId);
+                return db.GetTable<Address>()
+                    .LoadWith(c =>c.country)
+                    .FirstOrDefault(a => a.addressId == addressId);
             }
         }
         public void AddAddress(Address addressId)

@@ -15,8 +15,7 @@ const store = createStore({
             state.currentUser = null;
             localStorage.removeItem('currentUser');
             localStorage.removeItem('token'); 
-        }
-        
+        } 
     },
     actions: {
         async registerUser({ commit }, user) {
@@ -42,13 +41,8 @@ const store = createStore({
             } catch (error) {
                 throw new Error(error.response.data.message);
             }
-        },
-        async checkToken({ commit }) {
-            const token = localStorage.getItem('token');
-            if (token) {
-                commit('setCurrentUserFromToken', token);
-            }
         }
+        
     },
     getters: {
         isAdmin: state => {
@@ -56,6 +50,5 @@ const store = createStore({
         }
     },
 });
-// Проверка токена при загрузке страницы
-store.dispatch('checkToken');
+
 export default store;

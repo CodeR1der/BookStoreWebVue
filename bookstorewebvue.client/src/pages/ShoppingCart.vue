@@ -26,6 +26,7 @@
                                 {{ item.title }} - {{ item.quantity }} шт. - {{ item.price * item.quantity }} ₽
                             </li>
                         </ul>
+                        
                         <h5 class="mt-3">Итого: {{ totalCartPrice }} ₽ </h5>
                         <button>Оформить заказ</button>
                     </div>

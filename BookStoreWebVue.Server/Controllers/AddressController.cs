@@ -6,11 +6,11 @@ namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AddressController : Controller
+    public class AddressesController : Controller
     {
         private readonly AddressDataAccess _addressDataAccess;
 
-        public AddressController(AddressDataAccess addressDataAccess)
+        public AddressesController(AddressDataAccess addressDataAccess)
         {
             _addressDataAccess = addressDataAccess;
         }
