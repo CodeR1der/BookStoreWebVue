@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BookStoreWebVue.Server.BookStore;
 using BookStoreWebVue.Server.DataAccess;
+using System;
 
 namespace BookStoreWebVue.Server.Controllers
 {
@@ -9,16 +10,18 @@ namespace BookStoreWebVue.Server.Controllers
     public class BooksController : ControllerBase
     {
         private readonly BookDataAccess _bookDataAccess;
-
-        public BooksController(BookDataAccess bookDataAccess)
+        private readonly IWebHostEnvironment _environment;
+        public BooksController(BookDataAccess bookDataAccess, IWebHostEnvironment environment)
         {
             _bookDataAccess = bookDataAccess;
+            _environment = environment;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var allBooks = _bookDataAccess.GetAllBooks();
+            var allBooks = _bookDataAccess.GetAllBooksWithCover();
+
             return Ok(allBooks);
         }
 
@@ -36,16 +39,30 @@ namespace BookStoreWebVue.Server.Controllers
         }
 
         [HttpPost("post")]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromForm] BookFormData formData)
         {
-            if (book == null)
+            var book = formData.Book;
+            var coverImage = formData.CoverImage;
+            book.bookId = Guid.NewGuid();
+
+            if (book == null || coverImage == null)
             {
                 return BadRequest();
             }
-            
+
+            if (coverImage.Length > 0)
+            {
+                var imagePath = Path.Combine(_environment.ContentRootPath, "ImageBooks", $"{book.bookId.ToString("D")}.jpg");
+                using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                {
+                    coverImage.CopyTo(fileStream);
+                }
+            }
+
             _bookDataAccess.AddBook(book);
-            return CreatedAtAction(nameof(Get), new { id = book.bookId }, book);
+            return CreatedAtAction(nameof(Get), book);
         }
+
 
         [HttpPut("{id}/update")]
         public IActionResult Put(Guid id, [FromBody] Book book)
@@ -77,5 +94,11 @@ namespace BookStoreWebVue.Server.Controllers
             _bookDataAccess.DeleteBook(id);
             return NoContent();
         }
+        public class BookFormData
+        {
+            public Book Book { get; set; }
+            public IFormFile CoverImage { get; set; }
+        }
+
     }
 }

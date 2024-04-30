@@ -1,3 +1,4 @@
+using BookStoreWebVue.Server.Controllers;
 using BookStoreWebVue.Server.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,7 @@ var configuration = new ConfigurationBuilder()
             .Build();
 builder.Services.AddControllers()
     .AddNewtonsoftJson();
-builder.Services.AddScoped<BookDataAccess>(_ => new BookDataAccess(configuration.GetConnectionString("MyConnectionString")));
+builder.Services.AddScoped<BookDataAccess>(_ => new BookDataAccess(configuration.GetConnectionString("MyConnectionString"), builder.Environment));
 builder.Services.AddScoped<AuthorDataAccess>(_ => new AuthorDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<LanguageDataAccess>(_ => new LanguageDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<GenreDataAccess>(_ => new GenreDataAccess(configuration.GetConnectionString("MyConnectionString")));
@@ -25,7 +26,6 @@ builder.Services.AddScoped<SupplyLineDataAccess>(_ => new SupplyLineDataAccess(c
 builder.Services.AddScoped<WarehouseDataAccess>(_ => new WarehouseDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<PublisherDataAccess>(_ => new PublisherDataAccess(configuration.GetConnectionString("MyConnectionString")));
 builder.Services.AddScoped<UserDataAccess>(_ => new UserDataAccess(configuration.GetConnectionString("MyConnectionString")));
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

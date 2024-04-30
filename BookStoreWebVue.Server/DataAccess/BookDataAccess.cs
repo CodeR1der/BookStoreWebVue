@@ -1,6 +1,8 @@
 ﻿using BookStoreWebVue.Server.BookStore;
 using LinqToDB;
 using LinqToDB.DataProvider.PostgreSQL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,13 @@ namespace BookStoreWebVue.Server.DataAccess
     public class BookDataAccess
     {
         private readonly string _connectionString;
+        private readonly IWebHostEnvironment _environment;
 
-        public BookDataAccess(string connectionString)
+        public BookDataAccess(string connectionString, IWebHostEnvironment environment)
         {
             _connectionString = connectionString;
+            _environment = environment;
+
         }
 
         public void PrintAllBooks()
@@ -29,8 +34,8 @@ namespace BookStoreWebVue.Server.DataAccess
                                  .LoadWith(req => req.publisher)
                                  .LoadWith(req => req.genre)
                                  .ToList();
-                Console.WriteLine("{0,-5} {1,-10} {2, -25} {3, -30} {4, -45} {5, -50}", "Book ID", "Title", "Author" ,"Language","Publisher", "Genre");
-                Console.WriteLine(new string('-',70));
+                Console.WriteLine("{0,-5} {1,-10} {2, -25} {3, -30} {4, -45} {5, -50}", "Book ID", "Title", "Author", "Language", "Publisher", "Genre");
+                Console.WriteLine(new string('-', 70));
 
                 foreach (var book in allBooks)
                 {
@@ -43,7 +48,7 @@ namespace BookStoreWebVue.Server.DataAccess
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
             {
                 var allBooks = db.GetTable<Book>()
-                                 .OrderBy(book => book.bookId)
+                                 .OrderBy(book => book.title)
                                  .LoadWith(req => req.author)
                                  .LoadWith(req => req.language)
                                  .LoadWith(req => req.publisher)
@@ -52,6 +57,48 @@ namespace BookStoreWebVue.Server.DataAccess
                 return allBooks;
             }
         }
+
+        public class BookWithCover
+        {
+            public Book Book { get; set; }
+            public FileContentResult CoverFile { get; set; }
+        }
+
+        public List<BookWithCover> GetAllBooksWithCover()
+        {
+            // Получаем список всех книг
+            var allBooks = GetAllBooks();
+
+            // Определяем путь к папке ImageBooks
+            string imageFolderPath = Path.Combine(_environment.ContentRootPath, "ImageBooks");
+
+            // Создаем список для хранения книг с именами файлов обложек
+            var booksWithCoverFileName = new List<BookWithCover>();
+
+            // Для каждой книги в списке
+            foreach (var book in allBooks)
+            {
+                string coverPath = Path.Combine(imageFolderPath, $"{book.bookId}.jpg");
+
+                if (System.IO.File.Exists(coverPath))
+                {
+                    var imageBytes = System.IO.File.ReadAllBytes(coverPath);
+                    var mimeType = "image/jpeg";
+                    var fileContentResult = new FileContentResult(imageBytes, mimeType);
+
+                    booksWithCoverFileName.Add(new BookWithCover { Book = book, CoverFile = fileContentResult });
+                }
+                else
+                {
+                    // Если файл обложки не существует, добавляем null
+                    booksWithCoverFileName.Add(new BookWithCover { Book = book, CoverFile = null });
+                }
+            }
+
+            return booksWithCoverFileName;
+        }
+
+
         public void AddBook(Book book)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
@@ -83,5 +130,7 @@ namespace BookStoreWebVue.Server.DataAccess
                 db.GetTable<Book>().Delete(p => p.bookId == bookId);
             }
         }
+
+
     }
 }

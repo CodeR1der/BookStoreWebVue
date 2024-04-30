@@ -11,6 +11,10 @@
                 <div class="modal-body">
                     <form @submit.prevent="addBook">
                         <div class="form-group">
+                            <label for="coverImage">Обложка:</label>
+                            <input type="file" class="form-control" id="coverImage" @change="handleCoverImageChange">
+                        </div>
+                        <div class="form-group">
                             <label for="title">Название:</label>
                             <input type="text" class="form-control" id="title" v-model="newBook.title">
                         </div>
@@ -48,7 +52,7 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" class="btn btn-primary" @click="addBook">Сохранить</button>
                         <button type="button" class="btn btn-secondary" @click="closeModal">Отмена</button>
                     </div>
                 </div>
@@ -66,25 +70,28 @@
                 newBook: {
                     title: '',
                     authorId: '',
-                    author: { authorId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', authorName: '' },
                     isbn13: '',
                     languageId: '',
-                    language: { language: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', languageCode: '', languageName: '' },
                     numPages: 0,
                     publicationDate: 0,
                     publisherId: '',
-                    publisher: { publisherId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', publisherName: '' },
                     genreId: '',
-                    genre: { genreId: 'aaaaaaaa-bbbb-cccc-dddd-f98a6fa8d347', genreName: '' },
                     price: 0
-                }
+                },
+                coverImage: null
             };
         },
         methods: {
             async addBook() {
                 try {
                     const book = await checkBook(this.newBook);
-                    this.$emit('add', book);
+                    const formData = new FormData();
+                    // Добавляем каждое свойство объекта "Book" в FormData
+                    Object.keys(book).forEach(key => {
+                        formData.append(`Book.${key}`, book[key]);
+                    });
+                    formData.append('coverImage', this.coverImage)
+                    this.$emit('add', formData);
                     this.closeModal();
                 } catch (error) {
                     console.error(error);
@@ -92,7 +99,10 @@
             },
             closeModal() {
                 this.$emit('close');
-            }
+            },
+            handleCoverImageChange(event) {
+                this.coverImage = event.target.files[0];
+            },
         }
     };
 </script>

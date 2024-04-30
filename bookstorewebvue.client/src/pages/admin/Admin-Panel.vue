@@ -16,12 +16,12 @@
                 <tbody>
                     <tr v-for="book in books" :key="book.bookId">
                         <td>
-                            <img :src="'../imageBooks/${book.bookId}/${book.title}-1'" class="img-fluid" style="max-height: 100px;" />
-                        </td>
-                        <td>{{ book.title }}</td>
-                        <td>{{ book.price }} ₽</td>
-                        <td>{{ book.author.authorName.trim().split(' ').slice(0, 2).join(' ') }}</td>
-                        <td>{{ book.publisher.publisherName }}</td>
+                            <img :src="book.coverFile" class="img-fluid" style="max-height: 100px;" />
+                        </td>   
+                        <td>{{ book.book.title }}</td>
+                        <td>{{ book.book.price }} ₽</td>
+                        <td>{{ book.book.author.authorName.trim().split(' ').slice(0, 2).join(' ') }}</td>
+                        <td>{{ book.book.publisher.publisherName }}</td>
                         <td>
                             <button @click="openEditModal(book)" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                             <button @click="deleteBook(book.bookId)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
@@ -101,10 +101,10 @@
             closeAddModal() {
                 this.showAddModal = false;
             },
-            async addBook(newBook) {
+            async addBook(formData) {
                 try {
-                    const bookData = {...newBook};
-                    const response = await axios.post('books/post', bookData);
+
+                    const response = await axios.post('books/post', formData);
                     this.books.push(response.data);
                     this.closeAddModal();
                 } catch (error) {

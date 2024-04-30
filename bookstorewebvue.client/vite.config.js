@@ -94,6 +94,10 @@ export default defineConfig({
             '^/orderLine': {
                 target,
                 secure: false
+            },
+            '^/image': {
+                target,
+                secure: false
             }
         },
         port: 5173,
