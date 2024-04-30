@@ -7,11 +7,11 @@ namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CountryController : Controller
+    public class CountrysController : Controller
     {
         private readonly CountryDataAccess _countryDataAccess;
 
-        public CountryController(CountryDataAccess countryDataAccess)
+        public CountrysController(CountryDataAccess countryDataAccess)
         {
             _countryDataAccess = countryDataAccess;
         }

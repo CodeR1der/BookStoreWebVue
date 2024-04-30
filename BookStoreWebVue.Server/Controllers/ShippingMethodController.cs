@@ -8,11 +8,11 @@ namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ShippingMethodController : ControllerBase
+    public class ShippingMethodsController : ControllerBase
     {
         private readonly ShippingMethodDataAccess _shippingMethodDataAccess;
 
-        public ShippingMethodController(ShippingMethodDataAccess shippingMethodDataAccess)
+        public ShippingMethodsController(ShippingMethodDataAccess shippingMethodDataAccess)
         {
             _shippingMethodDataAccess = shippingMethodDataAccess;
         }

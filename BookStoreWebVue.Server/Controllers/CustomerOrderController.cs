@@ -7,15 +7,14 @@ namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CustomerOrderController : Controller
+    public class CustomerOrdersController : Controller
     {
         private readonly CustomerOrderDataAccess _customerOrderDataAccess;
 
-        public CustomerOrderController(CustomerOrderDataAccess customerOrderDataAccess)
+        public CustomerOrdersController(CustomerOrderDataAccess customerOrderDataAccess)
         {
             _customerOrderDataAccess = customerOrderDataAccess;
         }
-        // GET: api/author
         [HttpGet]
         public IActionResult Get()
         {
@@ -23,7 +22,6 @@ namespace BookStoreWebVue.Server.Controllers
             return Ok(allcustomerAddresses);
         }
 
-        // GET: api/author/5
         [HttpGet("{id}")]
         public IActionResult Get(Guid id, Guid addId)
         {
@@ -37,7 +35,6 @@ namespace BookStoreWebVue.Server.Controllers
             return Ok(customerAddress);
         }
 
-        // POST: api/author
         [HttpPost("post")]
         public IActionResult Post([FromBody] CustomerOrder customerOrder)
         {
@@ -45,7 +42,7 @@ namespace BookStoreWebVue.Server.Controllers
             {
                 return BadRequest();
             }
-
+            customerOrder.orderId = Guid.NewGuid();
             _customerOrderDataAccess.AddCustomerOrder(customerOrder);
             return CreatedAtAction(nameof(Get), new { id = customerOrder.customerId }, customerOrder);
         }

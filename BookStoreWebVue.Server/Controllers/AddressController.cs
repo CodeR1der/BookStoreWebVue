@@ -1,5 +1,7 @@
 ﻿using BookStoreWebVue.Server.BookStore;
 using BookStoreWebVue.Server.DataAccess;
+using BookStoreWebVue.Server.Functions;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWebVue.Server.Controllers
@@ -37,7 +39,7 @@ namespace BookStoreWebVue.Server.Controllers
             return Ok(address);
         }
 
-        // POST: api/books
+        
         [HttpPost("post")]
         public IActionResult Post([FromBody] Address address)
         {
@@ -47,6 +49,7 @@ namespace BookStoreWebVue.Server.Controllers
             }
 
             _addressDataAccess.AddAddress(address);
+
             return CreatedAtAction(nameof(Get), new { id = address.addressId }, address);
         }
 
@@ -58,16 +61,40 @@ namespace BookStoreWebVue.Server.Controllers
                 return BadRequest();
             }
 
-            var existingBook = _addressDataAccess.GetAddressById(id);
-            if (existingBook == null)
+            var existingAddress = _addressDataAccess.GetAddressById(id);
+            if (existingAddress== null)
             {
                 return NotFound();
             }
 
             _addressDataAccess.UpdateAddress(address);
+
             return NoContent();
         }
+        [HttpPatch("{id}/patch")]
+        public IActionResult Patch(Guid id, [FromBody] JsonPatchDocument<Address> patchAddress)
+        {
+            if (patchAddress == null)
+            {
+                return BadRequest();
+            }
 
+            var existingAddress = _addressDataAccess.GetAddressById(id);
+            if (existingAddress == null)
+            {
+                return NotFound();
+            }
+
+            patchAddress.ApplyTo(existingAddress, ModelState);
+
+            if (!TryValidateModel(existingAddress))
+            {
+                return BadRequest(ModelState);
+            }
+
+            _addressDataAccess.UpdateAddress(existingAddress);
+            return NoContent();
+        }
         // DELETE: api/books/5
         [HttpDelete("{id}/delete")]
         public IActionResult Delete(Guid id)

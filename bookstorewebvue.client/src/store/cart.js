@@ -31,6 +31,7 @@ const actions = {
     clearCart({ commit }) {
         commit('clearCart');
     },
+
 };
 
 export default {

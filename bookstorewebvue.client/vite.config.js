@@ -78,6 +78,22 @@ export default defineConfig({
             '^/address': {
                 target,
                 secure: false
+            },
+            '^/country': {
+                target,
+                secure: false
+            },
+            '^/shippingMethod': {
+                target,
+                secure: false
+            },
+            '^/customerOrder': {
+                target,
+                secure: false
+            },
+            '^/orderLine': {
+                target,
+                secure: false
             }
         },
         port: 5173,

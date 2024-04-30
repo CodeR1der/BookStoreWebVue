@@ -9,7 +9,6 @@ const checkBook = async (newBook) => {
 
     return newBook;
 }
-
 export default checkBook;
 
 const checkAuthor = async (author) => {

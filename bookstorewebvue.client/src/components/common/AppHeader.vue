@@ -14,7 +14,7 @@
                 <router-link to="/admin" class="nav-link">Админ панель</router-link>
             </div>
             <router-link to="/Books" class="nav-link">Каталог</router-link>
-            <router-link to="/Cart" class="nav-link">Корзина ({{ cartItemCount }})</router-link>
+            <router-link to="/Cart" class="nav-link"><i class="fa fa-shopping-cart" aria-hidden="true"></i><sub>{{ cartItemCount }}</sub></router-link>
             <div v-if="currentUser" class="navbar-nav">
                 <router-link to="/info" class="nav-link">{{currentUser.nickname}}</router-link>
                 <button @click="logout" class="btn btn-outline-danger">Выход</button>
@@ -59,12 +59,13 @@
 <style scoped>
     .header {
         background-color: #f8f9fa; /* Используем Bootstrap цвет фона */
-        z-index:999;
+        z-index: 999;
     }
 
         .header .container {
             display: flex;
             justify-content: space-between;
+            gap: 20px; /* Добавляем расстояние между элементами */
         }
 
     .input-group {

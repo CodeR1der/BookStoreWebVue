@@ -32,8 +32,9 @@
         </div>
 
         <AdminEditBook v-if="showEditModal" :book="selectedBook" @close="closeEditModal" @save="updateBook" />
-        <AdminAddBook v-if="showAddModal" @close="closeAddModal" @add="addBook" />
         <button @click="openAddModal" class="btn btn-success">Добавить книгу</button>
+        <AdminAddBook v-if="showAddModal" @close="closeAddModal" @add="addBook" />
+
     </div>
 </template>
 

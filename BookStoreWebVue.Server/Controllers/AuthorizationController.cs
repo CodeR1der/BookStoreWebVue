@@ -16,7 +16,7 @@ namespace BookStoreWebVue.Server.Controllers
     public class AuthorizationsController : ControllerBase
     {
         private readonly UserDataAccess _userDataAccess;
-        
+
         public AuthorizationsController(UserDataAccess userDataAccess)
         {
             _userDataAccess = userDataAccess;
@@ -44,10 +44,6 @@ namespace BookStoreWebVue.Server.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] User request)
         {
-            var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
             var existingUser = _userDataAccess.GetUserByEmail(request.email);
             if (existingUser != null)
             {
@@ -57,6 +53,8 @@ namespace BookStoreWebVue.Server.Controllers
             // Hash the password before storing it in the database
             string passwordHash = HashPassword(request.passwordHash);
 
+           
+            // Create a new user
             var newUser = new User
             {
                 email = request.email,
@@ -65,6 +63,7 @@ namespace BookStoreWebVue.Server.Controllers
                 nickname = request.nickname,
             };
 
+            // Add the new user to the database
             _userDataAccess.AddUser(newUser);
 
             // Generate JWT token
@@ -73,6 +72,7 @@ namespace BookStoreWebVue.Server.Controllers
             // Return user data along with token
             return Ok(new { newUser, Token = token });
         }
+
         [HttpPost("logout")]
         public IActionResult LogOut()
         {

@@ -26,9 +26,9 @@ namespace BookStoreWebVue.Server.Functions
                     new Claim("userId", user.userId.ToString()),
                     new Claim(ClaimTypes.Role, user.isAdmin ? "admin" : "user"),
                     new Claim("nickname", user.nickname),
-                    new Claim(ClaimTypes.Name, user.firstName),
-                    new Claim(ClaimTypes.Surname, user.lastName),
-                    new Claim("addressId", user.customerAddress)
+                    new Claim(ClaimTypes.Name, user.firstName != null ? user.firstName.ToString() : ""),
+                    new Claim(ClaimTypes.Surname, user.lastName != null ? user.lastName.ToString() : ""),
+                    new Claim("addressId", user.addressId !=null ?user.addressId.ToString() : "" )
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

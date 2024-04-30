@@ -35,10 +35,11 @@
         setup() {
             const store = useStore();
             const currentUser = computed(() => store.state.currentUser);
-
+            
             return {
                 currentUser
             };
+
         },
         methods: {
             async updateCustomer() {

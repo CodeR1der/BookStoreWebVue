@@ -12,7 +12,6 @@ namespace BookStoreWebVue.Server.BookStore
         [Column] public string city { get; set; }
         [Column] public Guid countryId { get; set; }
         [Association(ThisKey = nameof(countryId), OtherKey = nameof(Country.countryId))]
-        public Country country { get; set; }
-
+        public Country? country { get; set; }
     }
 }

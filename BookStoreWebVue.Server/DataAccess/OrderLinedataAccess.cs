@@ -29,26 +29,6 @@ namespace BookStoreWebVue.Server.DataAccess
                 return allOrderLines;
             }
         }
-        public void PrintAllOrderLines()
-        {
-            using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
-            {
-                var allOrderLines = db.GetTable<OrderLine>()
-                    .LoadWith(ol => ol.customerOrder)
-                    .LoadWith(ol => ol.book)
-                    .ToList();
-
-                Console.WriteLine("{0,-10} {1,-20} {2,-20} {3,-20} {4,-10} {5,-10}", "Line ID", "Order ID", "Book Title", "Price", "Quantity", "Total");
-                Console.WriteLine(new string('-', 90));
-
-                foreach (var orderLine in allOrderLines)
-                {
-                    double total = orderLine.price * orderLine.quantity;
-                    Console.WriteLine("{0,-10} {1,-20} {2,-20} {3,-20} {4,-10} {5,-10}", orderLine.lineID, orderLine.customerOrder.orderId, orderLine.book.title, orderLine.price, orderLine.quantity, total);
-                }
-            }
-        }
-
         public OrderLine GetOrderLineById(Guid lineId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))

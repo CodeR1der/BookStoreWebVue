@@ -44,6 +44,11 @@ const methods = {
     getTotalCartItems() {
         // Суммируем количество всех книг в корзине
         return state.cartItems.reduce((total, item) => total + item.quantity, 0);
+    },
+    clearCart() {
+        state.cartItems = [];
+        // Очищаем корзину в localStorage
+        localStorage.removeItem('cartItems');
     }
 };
 

@@ -26,9 +26,12 @@
                                 {{ item.title }} - {{ item.quantity }} шт. - {{ item.price * item.quantity }} ₽
                             </li>
                         </ul>
-                        
+                        <select v-model="selectedShippingMethod" class="form-select">
+                            <option disabled value="">Выберите способ доставки</option>
+                            <option v-for="method in shippingMethods" :key="method.methodId" :value="method.methodId">{{ method.methodName }} - {{ method.cost }} ₽</option>
+                        </select>
                         <h5 class="mt-3">Итого: {{ totalCartPrice }} ₽ </h5>
-                        <button>Оформить заказ</button>
+                        <button @click="createOrder">Оформить заказ</button>
                     </div>
                 </div>
             </div>
@@ -38,26 +41,92 @@
 
 <script>
     import ShoppingCartStore from '@/ShoppingCartStore.js';
+    import axios from 'axios';
+    import { computed } from 'vue';
+    import { useStore } from 'vuex';
 
     export default {
+        setup() {
+            const store = useStore();
+            const currentUser = computed(() => store.state.currentUser);
+
+            return {
+                currentUser
+            };
+        },
+        data() {
+            return {
+                shippingMethods: [],
+                selectedShippingMethod: null,
+                totalCartPrice: 0,
+                order: {}
+            };
+        },
         computed: {
             cartItems() {
                 return ShoppingCartStore.state.cartItems;
+            }
+        },
+        watch: {
+            selectedShippingMethod() {
+                this.updateTotalPrice();
             },
-            totalCartPrice() {
-                 return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+            cartItems: {
+                handler: 'updateTotalPrice',
+                deep: true
             }
         },
         methods: {
+            async createOrder() {
+                if (this.cartItems.length !== 0 && this.selectedShippingMethod) {
+                    const orderResponse = await axios.post(`/customerorders/post`, {
+                        orderDate: new Date(),
+                        customerId: this.currentUser.userId,
+                        shippingMethodId: this.selectedShippingMethod,
+                        destAddressId: this.currentUser.addressId,
+                        totalPrice: this.totalCartPrice
+                    });
+                    const orderId = orderResponse.data.orderId;
+                    await Promise.all(this.cartItems.map(async (item) => {
+                        await axios.post('/orderLines/post', {
+                            orderId: orderId,
+                            bookId: item.bookId, 
+                            quantity: item.quantity
+                        });
+                    }));
+                    ShoppingCartStore.clearCart();
+                }
+            },
             removeFromCart(index) {
                 ShoppingCartStore.removeFromCart(index);
             },
             increase(item) {
-                return ShoppingCartStore.increaseQuantity(item);
+                ShoppingCartStore.increaseQuantity(item);
             },
             decrease(item) {
-                return ShoppingCartStore.decreaseQuantity(item);
+                ShoppingCartStore.decreaseQuantity(item);
+            },
+            async fetchMethods() {
+                try {
+                    const response = await axios.get('/shippingMethods');
+                    this.shippingMethods = response.data;
+                    // Установка первого способа доставки по умолчанию
+                    this.selectedShippingMethod = this.shippingMethods[0].methodId;
+                } catch (error) {
+                    console.error('Ошибка при загрузке списка способов доставки:', error);
+                }
+            },
+            updateTotalPrice() {
+                const selectedMethod = this.shippingMethods.find(method => method.methodId === this.selectedShippingMethod);
+                if (selectedMethod) {
+                    this.totalCartPrice = this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0) + selectedMethod.cost;
+                }
             }
+        },
+
+        created() {
+            this.fetchMethods()
         }
     };
 </script>
+
