@@ -61,7 +61,7 @@ namespace BookStoreWebVue.Server.DataAccess
         public class BookWithCover
         {
             public Book Book { get; set; }
-            public FileContentResult CoverFile { get; set; }
+            public string CoverBase64 { get; set; }
         }
 
         public List<BookWithCover> GetAllBooksWithCover()
@@ -69,34 +69,36 @@ namespace BookStoreWebVue.Server.DataAccess
             // Получаем список всех книг
             var allBooks = GetAllBooks();
 
-            // Определяем путь к папке ImageBooks
             string imageFolderPath = Path.Combine(_environment.ContentRootPath, "ImageBooks");
 
-            // Создаем список для хранения книг с именами файлов обложек
-            var booksWithCoverFileName = new List<BookWithCover>();
+            // Создаем список для хранения книг с base64 изображениями обложек
+            var booksWithCoverBase64 = new List<BookWithCover>();
 
             // Для каждой книги в списке
             foreach (var book in allBooks)
             {
                 string coverPath = Path.Combine(imageFolderPath, $"{book.bookId}.jpg");
 
-                if (System.IO.File.Exists(coverPath))
+                if (File.Exists(coverPath))
                 {
-                    var imageBytes = System.IO.File.ReadAllBytes(coverPath);
-                    var mimeType = "image/jpeg";
-                    var fileContentResult = new FileContentResult(imageBytes, mimeType);
+                    // Если файл обложки существует, считываем его в байтовый массив
+                    byte[] imageBytes = File.ReadAllBytes(coverPath);
+                    // Преобразуем байтовый массив в base64 строку
+                    string base64String = "data:image/jpeg;base64,"+Convert.ToBase64String(imageBytes);
 
-                    booksWithCoverFileName.Add(new BookWithCover { Book = book, CoverFile = fileContentResult });
+                    // Добавляем книгу с base64 изображением обложки в список
+                    booksWithCoverBase64.Add(new BookWithCover { Book = book, CoverBase64 = base64String });
                 }
                 else
                 {
                     // Если файл обложки не существует, добавляем null
-                    booksWithCoverFileName.Add(new BookWithCover { Book = book, CoverFile = null });
+                    booksWithCoverBase64.Add(new BookWithCover { Book = book, CoverBase64 = null });
                 }
             }
 
-            return booksWithCoverFileName;
+            return booksWithCoverBase64;
         }
+
 
 
         public void AddBook(Book book)

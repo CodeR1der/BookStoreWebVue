@@ -19,6 +19,8 @@ app.use(Auth);
 app.use(router);
 app.provide('ShoppingCartStore', ShoppingCartStore);
 app.mount('#app');
+
+
 function parseToken(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

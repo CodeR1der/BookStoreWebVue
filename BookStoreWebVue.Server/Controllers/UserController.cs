@@ -67,6 +67,7 @@ namespace BookStoreWebVue.Server.Controllers
             _userDataAccess.UpdateUser(user);
             return NoContent();
         }
+
         [HttpPatch("{id}/patch")]
         public IActionResult Patch(Guid id, [FromBody] JsonPatchDocument<User> patchUser)
         {

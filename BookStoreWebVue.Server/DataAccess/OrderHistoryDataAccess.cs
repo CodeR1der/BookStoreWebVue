@@ -30,25 +30,6 @@ namespace BookStoreWebVue.Server.DataAccess
             }
         }
 
-        public void PrintAllOrderHistories()
-        {
-            using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))
-            {
-                var allOrderHistories = db.GetTable<OrderHistory>()
-                    .LoadWith(oh => oh.order)
-                    .LoadWith(oh => oh.status)
-                    .ToList();
-
-                Console.WriteLine("{0,-10} {1,-20} {2,-20} {3,-20}", "History ID", "Order ID", "Status", "Status Date");
-                Console.WriteLine(new string('-', 70));
-
-                foreach (var orderHistory in allOrderHistories)
-                {
-                    Console.WriteLine("{0,-10} {1,-20} {2,-20} {3,-20}", orderHistory.historyId, orderHistory.order.orderId, orderHistory.status.statusValue, orderHistory.statusDate);
-                }
-            }
-        }
-
         public OrderHistory GetOrderHistoryById(Guid historyId)
         {
             using (var db = PostgreSQLTools.CreateDataConnection(_connectionString))

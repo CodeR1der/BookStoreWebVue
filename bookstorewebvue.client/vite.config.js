@@ -95,7 +95,7 @@ export default defineConfig({
                 target,
                 secure: false
             },
-            '^/image': {
+            '^/supply': {
                 target,
                 secure: false
             }

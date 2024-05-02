@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <h1>Список книг</h1>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -16,15 +16,15 @@
                 <tbody>
                     <tr v-for="book in books" :key="book.bookId">
                         <td>
-                            <img :src="book.coverFile" class="img-fluid" style="max-height: 100px;" />
-                        </td>   
+                            <img :src="book.coverBase64" class="img-fluid" style="max-height: 100px;" />
+                        </td>
                         <td>{{ book.book.title }}</td>
                         <td>{{ book.book.price }} ₽</td>
                         <td>{{ book.book.author.authorName.trim().split(' ').slice(0, 2).join(' ') }}</td>
                         <td>{{ book.book.publisher.publisherName }}</td>
                         <td>
                             <button @click="openEditModal(book)" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                            <button @click="deleteBook(book.bookId)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            <button @click="deleteBook(book.book.bookId)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -46,7 +46,7 @@
     export default {
         components: {
             AdminEditBook,
-            AdminAddBook
+            AdminAddBook,
         },
         data() {
             return {
@@ -63,7 +63,7 @@
             async getBooks() {
                 try {
                     const response = await axios.get('books');
-                    this.books = response.data;
+                    this.books = response.data
                 } catch (error) {
                     console.error(error);
                 }
@@ -77,7 +77,7 @@
                 }
             },
             openEditModal(book) {
-                this.selectedBook = { ...book };
+                this.selectedBook = { ...book.book };
                 this.showEditModal = true;
             },
             closeEditModal() {
@@ -103,7 +103,6 @@
             },
             async addBook(formData) {
                 try {
-
                     const response = await axios.post('books/post', formData);
                     this.books.push(response.data);
                     this.closeAddModal();
@@ -114,3 +113,10 @@
         }
     };
 </script>
+
+<style>
+    .main {
+        margin-left: 200px; 
+        padding: 20px;
+    }
+</style>

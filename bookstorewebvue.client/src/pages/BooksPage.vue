@@ -3,13 +3,13 @@
     <div class="row">
         <div class="col-md-3" v-for="book in forsale" :key="book.id">
             <div class="card">
-                <img src="" width="640"  class="card-img-top">
+                <img :src="book.coverBase64" class="card-img-top mx-auto d-block">
                 <div class="card-body">
-                    <h4 class="card-title">{{ book.title }}</h4>
-                    <h5 class="card-text">{{ book.author.authorName.trim().split(' ').slice(0, 2).join(' ') }}</h5>
-                    <div class="card-text">{{ book.price }} ₽</div>
+                    <h4 class="card-title">{{ book.book.title }}</h4>
+                    <h5 class="card-text">{{ book.book.author.authorName.trim().split(' ').slice(0, 2).join(' ') }}</h5>
+                    <div class="card-text">{{ book.book.price }} ₽</div>
                     <div class="row justify-content-end">
-                        <button class="btn btn-success" @click="addToCart(book)">В корзину</button>
+                        <button class="btn btn-success" @click="addToCart(book.book)">В корзину</button>
                     </div>
                 </div>
             </div>
@@ -53,3 +53,13 @@
         }
     });
 </script>
+<style>
+    .card-img-top {
+        width: 128px;
+        height: auto;
+    }
+    .card {
+        width: 256px;
+        height: auto;
+    }
+</style>

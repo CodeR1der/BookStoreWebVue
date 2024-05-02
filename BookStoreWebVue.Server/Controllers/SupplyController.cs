@@ -8,11 +8,11 @@ namespace BookStoreWebVue.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class SupplyController : ControllerBase
+    public class SupplysController : ControllerBase
     {
         private readonly SupplyDataAccess _supplyDataAccess;
 
-        public SupplyController(SupplyDataAccess supplyDataAccess)
+        public SupplysController(SupplyDataAccess supplyDataAccess)
         {
             _supplyDataAccess = supplyDataAccess;
         }
