@@ -9,7 +9,7 @@ BookStore - проект сайта для магазина книг на осн
 - Vuex
 - Bootstrap 5
 # ERD-диаграмма базы данных
-![image](https://github.com/CodeR1der/BookStoreWebVue/assets/88038718/e1f9ae1a-9b11-41af-9b76-4d6f3ae86a10) 
+![ERD-diagram](https://github.com/CodeR1der/BookStoreWebVue/assets/88038718/6e2e7b48-2167-4f5d-bed9-e63da0ae1f0e)
 # Реализованные функции
 - Просмотр каталога
 - Ааторизация 
